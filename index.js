@@ -33,7 +33,6 @@ app.get('/images/logo.png', function(_, res) {
 });
 
 app.get('/model-api-key', function(req, res) {
-    console.log(process.env.ROBOFLOW_API_KEY)
     res.json({ key: process.env.ROBOFLOW_API_KEY });
 });
 

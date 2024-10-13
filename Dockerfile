@@ -7,4 +7,4 @@ RUN npm i
 
 EXPOSE 5000
 
-CMD [ "node", "." ]
+CMD [ "npm", "start" ]

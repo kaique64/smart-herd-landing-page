@@ -4,49 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartHerd - Monitoramento Inteligente de Rebanhos Bovinos</title>
-    <link rel="icon" type="image/x-icon" href="/images/logo.png">
-    <link rel="stylesheet" href="/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="images/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981',
+                        secondary: '#059669',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>SmartHerd</h1>
-        <p>Monitoramento Inteligente de Rebanhos Bovinos</p>
-    </header>
-
-    <section class="hero">
-        <h2>Revolucione a Gestão do seu Rebanho</h2>
-        <p>Tecnologia de ponta para monitoramento e análise de comportamento bovino</p>
-        <a class="btn btn-primary" href="#saiba-mais" class="btn">Saiba Mais</a>
-        <a class="btn btn-primary mt-5" href="/model-test" class="btn">Teste agora!</a>
-    </section>
-
-    <div class="container">
-        <h2 id="saiba-mais">O Que é o SmartHerd?</h2>
-        <p>O SmartHerd é um projeto inovador que utiliza visão computacional e inteligência artificial para monitorar e analisar o comportamento de rebanhos bovinos. Nosso objetivo é revolucionar a gestão pecuária, proporcionando uma visão abrangente do estado e comportamento do gado aos criadores.</p>
-        
-        <h2>Problemática</h2>
-        <p>A gestão eficiente de grandes rebanhos é um desafio constante para os pecuaristas. Monitorar individualmente cada animal, identificar padrões de comportamento e detectar problemas precocemente são tarefas complexas e demoradas quando realizadas manualmente.</p>
-        
-        <h2>Nossa Solução</h2>
-        <p>O SmartHerd utiliza tecnologia de ponta para automatizar o processo de monitoramento, oferecendo:</p>
-        
-        <div class="features mb-5">
-            <div class="feature">
-                <h3>Identificação Precisa</h3>
-                <p>Reconhecimento individual de bovinos com alta precisão</p>
-            </div>
-            <div class="feature">
-                <h3>Análise Comportamental</h3>
-                <p>Detecção de padrões de comportamento e anomalias</p>
-            </div>
-            <div class="feature">
-                <h3>Monitoramento em Tempo Real</h3>
-                <p>Acompanhamento contínuo do rebanho, 24 horas por dia</p>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <nav class="bg-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-8 w-8" src="images/logo.png" alt="SmartHerd">
+                    </a>
+                    <div class="ml-4 text-white text-xl font-bold">Smart Herd</div>
+                </div>
             </div>
         </div>
     </nav>
-
     <main>
         <div class="relative w-full">
             <div class="absolute inset-0">
@@ -67,7 +61,6 @@
                 </div>
             </div>
         </div>
-
         <div class="py-12 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:text-center">
@@ -79,7 +72,6 @@
                         O SmartHerd é um projeto inovador que utiliza visão computacional e inteligência artificial para monitorar e analisar o comportamento de rebanhos bovinos. Nosso objetivo é revolucionar a gestão pecuária, proporcionando uma visão abrangente do estado e comportamento do gado aos criadores.
                     </p>
                 </div>
-
                 <div class="mt-10">
                     <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                         <div class="relative">
@@ -95,7 +87,6 @@
                                 Reconhecimento individual de bovinos com alta precisão
                             </dd>
                         </div>
-
                         <div class="relative">
                             <dt>
                                 <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
@@ -109,7 +100,6 @@
                                 Detecção de padrões de comportamento e anomalias
                             </dd>
                         </div>
-
                         <div class="relative">
                             <dt>
                                 <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
@@ -127,7 +117,6 @@
                 </div>
             </div>
         </div>
-
         <div class="bg-gray-50 py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl mx-auto">
@@ -189,7 +178,6 @@
                 behavior: 'smooth'
             });
         });
-
         const uploadForm = document.getElementById("upload-form");
         const fileInput = document.getElementById("file");
         const uploadStatus = document.getElementById("upload-status");
@@ -199,46 +187,36 @@
         const linkUpload = document.getElementById("upload-link");
         const btnText = document.getElementById("btn-text");
         const spinner = document.getElementById("spinner");
-
         uploadForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             await uploadFile();
         });
-
         // Prevent default drag behaviors
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropZone.addEventListener(eventName, preventDefaults, false);
             document.body.addEventListener(eventName, preventDefaults, false);
         });
-
         // Highlight drop zone when item is dragged over it
         ['dragenter', 'dragover'].forEach(eventName => {
             dropZone.addEventListener(eventName, highlight, false);
         });
-
         ['dragleave', 'drop'].forEach(eventName => {
             dropZone.addEventListener(eventName, unhighlight, false);
         });
-
         // Handle dropped files
         dropZone.addEventListener('drop', handleDrop, false);
-
         // Display file name when a file is selected
         fileInput.addEventListener('change', displayFileName);
-
         function preventDefaults(e) {
             e.preventDefault();
             e.stopPropagation();
         }
-
         function highlight() {
             dropZone.classList.add('bg-gray-100');
         }
-
         function unhighlight() {
             dropZone.classList.remove('bg-gray-100');
         }
-
         function displayFileName() {
             const file = fileInput.files[0];
             if (file) {
@@ -255,7 +233,6 @@
                 fileNameDisplay.className = "mt-2 text-sm text-gray-500";
             }
         }
-
         function handleDrop(e) {
             const dt = e.dataTransfer;
             const files = dt.files;
@@ -267,7 +244,6 @@
                 fileNameDisplay.className = "mt-2 text-sm text-red-500";
             }
         }
-
         function setLoading(isLoading) {
             btnUpload.disabled = isLoading;
             if (isLoading) {
@@ -277,13 +253,11 @@
                 btnText.textContent = 'Enviando...';
                 return;
             }
-
             spinner.classList.add('hidden');
             linkUpload.classList.add('cursor-pointer');
             linkUpload.classList.remove('cursor-not-allowed');
             btnText.textContent = 'Upload';
         }
-
         async function uploadFile() {
             const file = fileInput.files[0];
             if (!file) {
@@ -291,16 +265,13 @@
                 uploadStatus.className = "mt-4 text-center text-sm font-medium text-red-600";
                 return;
             }
-
             if (!file.type.startsWith('video/')) {
                 uploadStatus.textContent = "Por favor, selecione apenas arquivos de vídeo.";
                 uploadStatus.className = "mt-4 text-center text-sm font-medium text-red-600";
                 return;
             }
-
             const formData = new FormData();
             formData.append("file", file);
-
             try {
                 setLoading(true);
                 uploadStatus.textContent = "";
@@ -308,7 +279,6 @@
                     method: "POST",
                     body: formData,
                 });
-
                 if (response.ok) {
                     uploadStatus.textContent = "Vídeo enviado com sucesso!";
                     uploadStatus.className = "mt-4 text-center text-sm font-medium text-green-600";
@@ -326,7 +296,6 @@
                 setLoading(false);
             }
         }
-
         // Adiciona animação de fade-in aos elementos da página
         function fadeInElements() {
             const elements = document.querySelectorAll('main > div');
@@ -337,7 +306,6 @@
                 }, index * 200);
             });
         }
-
         window.addEventListener('load', fadeInElements);
     </script>
 </body>

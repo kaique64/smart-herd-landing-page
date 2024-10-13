@@ -12,15 +12,15 @@ app.get('/',function(_, res) {
 });
 
 app.get('/style.css', function(_, res) {
-    res.sendFile(dirname + "/style.css");
+    res.sendFile(`${dirname}/style.css`);
 });
 
 app.get('/images/img.png', function(_, res) {
-    res.sendFile(dirname + "/images/img.png");
+    res.sendFile(`${dirname}/images/img.png`);
 });
 
 app.get('/images/logo.png', function(_, res) {
-    res.sendFile(dirname + "/images/logo.png");
+    res.sendFile(`${dirname}/images/logo.png`);
 });
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))

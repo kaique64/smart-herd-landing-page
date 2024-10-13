@@ -1,16 +1,23 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { config } from 'dotenv';
 
 const app = express();
-const PORT = 5000
+const PORT = 5000;
 
-// Get dirname to send absolute file path to render
+app.use(express.json());
+config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.get('/',function(_, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/model-test', function (_, res) {
+    res.sendFile(path.join(`${__dirname}/testModel.html`));
 });
 
 app.get('/style.css', function(_, res) {
@@ -25,7 +32,12 @@ app.get('/images/logo.png', function(_, res) {
     res.sendFile(path.join(__dirname, 'images', 'logo.png'));
 });
 
-app.post('/upload', upload.single('file'), function(req, res) {
+app.get('/model-api-key', function(req, res) {
+    console.log(process.env.ROBOFLOW_API_KEY)
+    res.json({ key: process.env.ROBOFLOW_API_KEY });
+});
+
+app.post('/upload', function(req, res) {
     if (!req.file) {
         console.error('Error: No file uploaded');
         return res.status(400).send('No file uploaded');
@@ -33,6 +45,10 @@ app.post('/upload', upload.single('file'), function(req, res) {
 
     console.log('File saved successfully:', req.file.path);
     return res.status(200).send('File uploaded successfully');
+});
+
+app.get('/usecases/uploadImage.js', function (_, res) {
+    res.sendFile(__dirname + "/usecases/uploadImage.js");
 });
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))

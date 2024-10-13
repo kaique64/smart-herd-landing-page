@@ -13,4 +13,3 @@ services:
     build: .
     ports:
         - 5000
-

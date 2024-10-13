@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import multer from 'multer';
 import { fileURLToPath } from 'url';
 
 const app = express();
@@ -9,18 +8,6 @@ const PORT = 5000
 // Get dirname to send absolute file path to render
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Configure multer for file upload
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname))
-    }
-})
-
-const upload = multer({ storage: storage })
 
 app.get('/',function(_, res) {
     res.sendFile(path.join(__dirname, 'index.html'));

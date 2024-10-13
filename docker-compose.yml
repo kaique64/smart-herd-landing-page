@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  nginx:
+    restart: "always"
+    build: ./nginx/
+    ports:
+        - "80:80"
+    links:
+        - node
+  node:
+    restart: "always"
+    build: .
+    ports:
+        - 5000
+

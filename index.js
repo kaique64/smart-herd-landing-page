@@ -1,12 +1,15 @@
 import express from 'express';
 import path from 'path';
+import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
+import axios from 'axios';
 
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use(bodyParser.text({ type: 'text/plain', limit: '10mb' }));
 config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +37,22 @@ app.get('/images/logo.png', function(_, res) {
 
 app.get('/model-api-key', function(req, res) {
     res.json({ key: process.env.ROBOFLOW_API_KEY });
+});
+
+app.post('/model-img-predict', async function (req, res) {
+    try {
+        console.log('Calling python server to predict image');
+        
+        const response = await axios.post("http://localhost:3000/model-img-predict", req.body, {
+            headers: { "Content-Type": "text/plain" }
+        });
+
+        console.log('Python server called successfully');
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return "Error";
+    }
 });
 
 app.post('/upload', function(req, res) {

@@ -203,7 +203,9 @@
 
     async function uploadImage(base64Image, originalWidth, originalHeight, ctx, originalImageData) {
         try {
-            const response = await axios.post("http://localhost:3000/model-img-predict", base64Image, {
+            const response = await fetch("/model-img-predict", {
+                method: 'POST',
+                body: base64Image,
                 headers: { "Content-Type": "text/plain" }
             });
 

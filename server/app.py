@@ -20,7 +20,7 @@ def model_image_predict():
     try:
         app.logger.info('Init calling model')
         result = upload_image_predict(request.data)
-        
+
         if result is None:
             app.logger.warning('Prediction result is None')
             raise Exception("Prediction result is None")

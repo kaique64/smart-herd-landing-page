@@ -203,14 +203,14 @@
 
     async function uploadImage(base64Image, originalWidth, originalHeight, ctx, originalImageData) {
         try {
-            const response = await fetch("/model-img-predict", {
+            const { predictions } = await fetch("/model-img-predict", {
                 method: 'POST',
                 body: base64Image,
                 headers: { "Content-Type": "text/plain" }
-            });
+            }).then(res => res.json());
 
             ctx.putImageData(originalImageData, 0, 0);
-            drawDetections(response.data.predictions, originalWidth, originalHeight, ctx);
+            drawDetections(predictions, originalWidth, originalHeight, ctx);
         } catch (error) {
             console.log('Erro no upload:', error.message);
         }

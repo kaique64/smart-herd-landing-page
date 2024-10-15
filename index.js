@@ -48,10 +48,10 @@ app.post('/model-img-predict', async function (req, res) {
         });
 
         console.log('Python server called successfully');
-        return response.data;
+        res.send(response.data);
     } catch (e) {
         console.log(e);
-        return "Error";
+        res.sendStatus(500);
     }
 });
 

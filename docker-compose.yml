@@ -4,16 +4,21 @@ services:
   nginx:
     restart: always
     build: ./nginx
+    container_name: nginx
     ports:
       - "80:80"
 
   node:
     restart: always
+    container_name: node
     build: .
     ports:
       - "5000:5000"
+    links:
+      - pyserver
 
   pyserver:
+    container_name: pyserver
     build: ./server
     restart: always
     ports:

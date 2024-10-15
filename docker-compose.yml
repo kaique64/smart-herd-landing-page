@@ -11,10 +11,12 @@ services:
     restart: always
     build: .
     ports:
-      - 5000
+      - "5000:5000"
 
   pyserver:
     build: ./server
     restart: always
     ports:
-      - 3000
+      - "3000:3000"
+    env_file:
+      - .env

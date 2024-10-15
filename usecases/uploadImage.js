@@ -203,10 +203,8 @@
 
     async function uploadImage(base64Image, originalWidth, originalHeight, ctx, originalImageData) {
         try {
-            const { key } = await fetch('/model-api-key').then(res => res.json());
-            const response = await axios.post("https://detect.roboflow.com/cattle-zyenu/2", base64Image, {
-                params: { api_key: key },
-                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            const response = await axios.post("http://localhost:3000/model-img-predict", base64Image, {
+                headers: { "Content-Type": "text/plain" }
             });
 
             ctx.putImageData(originalImageData, 0, 0);

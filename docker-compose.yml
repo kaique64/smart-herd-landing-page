@@ -1,15 +1,20 @@
-version: '2'
+version: '3'
 
 services:
   nginx:
-    restart: "always"
-    build: ./nginx/
+    restart: always
+    build: ./nginx
     ports:
-        - "80:80"
-    links:
-        - node
+      - "80:80"
+
   node:
-    restart: "always"
+    restart: always
     build: .
     ports:
-        - 5000
+      - 5000
+
+  pyserver:
+    build: ./server
+    restart: always
+    ports:
+      - 3000

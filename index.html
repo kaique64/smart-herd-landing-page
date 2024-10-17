@@ -142,13 +142,13 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r p-0">
                                     <div class="flex items-center">
                                         <input id="horizontal-list-radio-license" type="radio" name="image-source" value="file" class="sr-only peer" checked>
-                                        <label for="horizontal-list-radio-license" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-l-lg">Arquivo do computador</label>
+                                        <label for="horizontal-list-radio-license" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-lg sm:rounded-l-lg sm:rounded-r-none rounded-b-none">Arquivo do computador</label>
                                     </div>
                                 </li>
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r p-0">
                                     <div class="flex items-center">
                                         <input id="horizontal-list-radio-id" type="radio" name="image-source" value="url" class="sr-only peer">
-                                        <label for="horizontal-list-radio-id" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-r-lg">URL da imagem</label>
+                                        <label for="horizontal-list-radio-id" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-lg sm:rounded-r-lg sm:rounded-l-none rounded-t-none">URL da imagem</label>
                                     </div>
                                 </li>
                             </ul>
@@ -196,14 +196,14 @@
                     </form>
                     <div id="upload-status" class="mt-4 text-center text-sm font-medium"></div>
                     <div id="image-preview" class="mt-8 hidden">
-                        <div class="flex justify-between space-x-4">
-                            <div class="image-container w-1/2 bg-white p-4 rounded-lg shadow-md">
-                                <h4 class="text-lg font-bold text-gray-900 mb-4">Original</h4>
+                        <div class="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="image-container w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
+                                <h4 class="text-lg md:text-lg font-bold text-gray-900 mb-4">Original</h4>
                                 <img id="preview-image-1" src="" alt="Imagem carregada 1" class="w-full h-auto object-cover rounded">
                             </div>
-                            <div class="image-container w-1/2 bg-white p-4 rounded-lg shadow-md">
-                                <h4 id="result" class="text-lg font-bold text-gray-900 mb-4">Resultado</h4>
-                                <canvas id="canvas"></canvas>
+                            <div class="image-container w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
+                                <h4 id="result" class="text-lg md:text-lg font-bold text-gray-900 mb-4">Resultado</h4>
+                                <canvas id="canvas" class="w-full h-auto"></canvas>
                             </div>
                         </div>
                     </div>

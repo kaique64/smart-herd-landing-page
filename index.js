@@ -19,10 +19,6 @@ app.get('/',function(_, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/model-test', function (_, res) {
-    res.sendFile(path.join(`${__dirname}/testModel.html`));
-});
-
 app.get('/style.css', function(_, res) {
     res.sendFile(path.join(__dirname, 'style.css'));
 });
@@ -37,6 +33,24 @@ app.get('/images/logo.png', function(_, res) {
 
 app.get('/model-api-key', function(req, res) {
     res.json({ key: process.env.ROBOFLOW_API_KEY });
+});
+
+app.post('/get-image-from-url', async function(req, res) {
+    try {
+        const { url } = JSON.parse(req.body);
+
+        const response = await axios.get(url, {
+            responseType: 'arraybuffer'
+        });
+
+        const contentType = response.headers['content-type'];
+
+        res.set('Content-Type', contentType);
+        res.send(response.data);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('An error occurred while fetching the image');
+    }
 });
 
 app.post('/model-img-predict', async function (req, res) {

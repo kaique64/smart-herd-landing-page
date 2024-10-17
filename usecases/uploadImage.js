@@ -1,5 +1,5 @@
 // Encapsular todo o código em uma IIFE (Immediately Invoked Function Expression)
-(function() {
+(function () {
     'use strict';
 
     // Constantes para seletores DOM
@@ -19,7 +19,12 @@
         SPINNER: '#spinner',
         CANVAS: '#canvas',
         PREVIEW_IMAGE: '#preview-image-1',
-        IMAGE_PREVIEW: '#image-preview'
+        IMAGE_PREVIEW: '#image-preview',
+        IMAGE_SOURCE_RADIOS: 'input[name="image-source"]',
+        FILE_UPLOAD_SECTION: '#file-upload-section',
+        URL_INPUT_SECTION: '#url-input-section',
+        IMAGE_URL_INPUT: '#image-url',
+        RESULT_TITLE: '#result'
     };
 
     // Funções auxiliares
@@ -39,6 +44,22 @@
         $(SELECTORS.UPLOAD_SECTION_LINK).addEventListener('click', handleTesteAgoraClick);
         $(SELECTORS.UPLOAD_FORM).addEventListener('submit', handleFormSubmit);
         $(SELECTORS.FILE_INPUT).addEventListener('change', displayFileName);
+        $$(SELECTORS.IMAGE_SOURCE_RADIOS).forEach(radio => {
+            radio.addEventListener('change', toggleImageSourceSection);
+        });
+    }
+
+    function toggleImageSourceSection() {
+        const fileSection = $(SELECTORS.FILE_UPLOAD_SECTION);
+        const urlSection = $(SELECTORS.URL_INPUT_SECTION);
+
+        if (this.value === 'file') {
+            fileSection.classList.remove('hidden');
+            urlSection.classList.add('hidden');
+        } else {
+            fileSection.classList.add('hidden');
+            urlSection.classList.remove('hidden');
+        }
     }
 
     // Configurar a zona de arrastar e soltar
@@ -131,52 +152,67 @@
 
     // Lógica principal
     async function uploadFile() {
-        const file = $(SELECTORS.FILE_INPUT).files[0];
         const uploadStatus = $(SELECTORS.UPLOAD_STATUS);
-
-        if (!file) {
-            showError("Por favor, selecione um arquivo de imagem.");
-            return;
-        }
-        if (!file.type.startsWith('image/')) {
-            showError("Por favor, selecione apenas arquivos de imagem.");
-            return;
-        }
+        const imageSource = $('input[name="image-source"]:checked').value;
+        let imageUrl, file;
 
         try {
             setLoading(true);
             uploadStatus.textContent = "";
 
-            // Simular o upload bem-sucedido
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            if (imageSource === 'file') {
+                file = $(SELECTORS.FILE_INPUT).files[0];
+                if (!file) {
+                    throw new Error("Por favor, selecione um arquivo de imagem.");
+                }
+                if (!file.type.startsWith('image/')) {
+                    throw new Error("Por favor, selecione apenas arquivos de imagem.");
+                }
+                imageUrl = URL.createObjectURL(file);
+            } else {
+                imageUrl = $(SELECTORS.IMAGE_URL_INPUT).value.trim();
+                if (!imageUrl) {
+                    throw new Error("Por favor, insira uma URL de imagem válida.");
+                }
 
-            const imageUrl = URL.createObjectURL(file);
+                const response = await fetch('/get-image-from-url', {
+                    method: 'POST',
+                    body: JSON.stringify({ url: imageUrl }),
+                    headers: { "Content-Type": "text/plain" }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const blob = await response.blob();
+                file = new File([blob], "image_from_url.jpg", { type: blob.type });
+                imageUrl = URL.createObjectURL(blob);
+            }
+
             const imgElement = $(SELECTORS.PREVIEW_IMAGE);
             imgElement.src = imageUrl;
             $(SELECTORS.IMAGE_PREVIEW).classList.remove('hidden');
+            $(SELECTORS.RESULT_TITLE).innerHTML = 'Resultado';
 
-            const reader = new FileReader();
-            reader.onloadend = function() {
-                imgElement.src = reader.result;
-                imgElement.onload = async function() {
-                    await processImage(imgElement, reader.result.split(',')[1]);
+            await new Promise((resolve) => {
+                imgElement.onload = async function () {
+                    await processImage(imgElement, file);
+                    resolve();
                 };
-                imgElement.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
+            });
 
-            uploadStatus.textContent = "Imagem enviada com sucesso!";
+            uploadStatus.textContent = "Imagem carregada com sucesso!";
             uploadStatus.className = "mt-4 text-center text-sm font-medium text-green-600";
         } catch (err) {
             console.error(err);
-            uploadStatus.textContent = "Erro ao conectar com o servidor. Por favor, tente novamente.";
+            uploadStatus.textContent = err.message || "Erro ao carregar a imagem. Por favor, tente novamente.";
             uploadStatus.className = "mt-4 text-center text-sm font-medium text-red-600";
         } finally {
             setLoading(false);
         }
     }
 
-    async function processImage(imgElement, base64Image) {
+    async function processImage(imgElement, file) {
         const canvas = $(SELECTORS.CANVAS);
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
@@ -188,7 +224,17 @@
 
         applyBlackAndWhiteFilter(ctx, canvas.width, canvas.height);
 
+        const base64Image = await fileToBase64(file);
         await uploadImage(base64Image, imgElement.naturalWidth, imgElement.naturalHeight, ctx, originalImageData);
+    }
+
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     }
 
     function applyBlackAndWhiteFilter(ctx, width, height) {
@@ -211,6 +257,7 @@
 
             ctx.putImageData(originalImageData, 0, 0);
             drawDetections(predictions, originalWidth, originalHeight, ctx);
+            $(SELECTORS.RESULT_TITLE).innerHTML = `Resultado: ${predictions.length} Vacas/Bois encontrados`;
         } catch (error) {
             console.log('Erro no upload:', error.message);
         }

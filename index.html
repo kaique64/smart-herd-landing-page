@@ -135,6 +135,25 @@
                     <h2 id="upload-section" class="text-3xl font-extrabold text-gray-900 text-center">Upload de Imagem</h2>
                     <form id="upload-form" class="mt-8 space-y-6" enctype="multipart/form-data">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Escolha a fonte da imagem:
+                            </label>
+                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex p-0">
+                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r p-0">
+                                    <div class="flex items-center">
+                                        <input id="horizontal-list-radio-license" type="radio" name="image-source" value="file" class="sr-only peer" checked>
+                                        <label for="horizontal-list-radio-license" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-l-lg">Arquivo do computador</label>
+                                    </div>
+                                </li>
+                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r p-0">
+                                    <div class="flex items-center">
+                                        <input id="horizontal-list-radio-id" type="radio" name="image-source" value="url" class="sr-only peer">
+                                        <label for="horizontal-list-radio-id" class="w-full py-3 px-4 text-sm font-medium text-gray-900 bg-white peer-checked:bg-[rgb(16_185_129/var(--tw-bg-opacity))] peer-checked:text-white rounded-r-lg">URL da imagem</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="file-upload-section">
                             <label for="file" class="block text-sm font-medium text-gray-700">
                                 Selecione um arquivo de imagem
                             </label>
@@ -157,6 +176,14 @@
                             </div>
                             <p id="file-name" class="mt-2 text-sm text-gray-500"></p>
                         </div>
+
+                        <div id="url-input-section" class="hidden">
+                            <label for="image-url" class="block text-sm font-medium text-gray-700">
+                                URL da imagem
+                            </label>
+                            <input type="url" id="image-url" name="image-url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="https://smart-herd.devops-ninja-course.org/image.png"/>
+                        </div>
+
                         <div>
                             <button type="submit" id="btn-upload" class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed">
                                 <svg id="spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -175,7 +202,7 @@
                                 <img id="preview-image-1" src="" alt="Imagem carregada 1" class="w-full h-auto object-cover rounded">
                             </div>
                             <div class="image-container w-1/2 bg-white p-4 rounded-lg shadow-md">
-                                <h4 class="text-lg font-bold text-gray-900 mb-4">Resultado</h4>
+                                <h4 id="result" class="text-lg font-bold text-gray-900 mb-4">Resultado</h4>
                                 <canvas id="canvas"></canvas>
                             </div>
                         </div>

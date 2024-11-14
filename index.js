@@ -118,7 +118,7 @@ app.get('/result-images', async function (req, res) {
     try {
         console.log("Getting images data");
 
-        const result = await db.collection('images').find({}).toArray1();
+        const result = await db.collection('images').find({}).toArray();
 
         console.log("Image saved successfully");
         return res.status(200).send({ result });

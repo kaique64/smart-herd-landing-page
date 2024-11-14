@@ -258,6 +258,12 @@
             ctx.putImageData(originalImageData, 0, 0);
             drawDetections(predictions, originalWidth, originalHeight, ctx);
             $(SELECTORS.RESULT_TITLE).innerHTML = `Resultado: ${predictions.length} Vacas/Bois encontrados`;
+
+            await fetch("/save-image", {
+                method: 'POST',
+                body: getCanvasAsBase64(),
+                headers: { "Content-Type": "text/plain" }
+            }).then(res => res.json()).catch(e => console.log(e));
         } catch (error) {
             console.log('Erro no upload:', error.message);
         }
@@ -281,6 +287,11 @@
             ctx.fillStyle = 'red';
             ctx.fillText(`${detectedClass} (${(confidence * 100).toFixed(2)}%)`, scaledX - scaledWidth / 2, scaledY - scaledHeight / 2 - 10);
         });
+    }
+
+    function getCanvasAsBase64() {
+        const canvas = $(SELECTORS.CANVAS);
+        return canvas.toDataURL('image/png');
     }
 
     function fadeInElements() {

@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 import axios from 'axios';
 import { MongoClient } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://mongodb:27017';
 const DB_NAME = 'smart-herd';
 let db;
 
@@ -75,7 +75,7 @@ app.post('/model-img-predict', async function (req, res) {
     try {
         console.log('Calling python server to predict image');
 
-        const response = await axios.post("http://localhost:3000/model-img-predict", req.body, {
+        const response = await axios.post("http://pyserver:3000/model-img-predict", req.body, {
             headers: { "Content-Type": "text/plain" }
         });
 

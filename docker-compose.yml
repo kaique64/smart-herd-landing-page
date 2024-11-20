@@ -3,34 +3,27 @@ version: '3'
 services:
   nginx:
     restart: always
-    build: ./nginx
+    image: nginx:alpine
     container_name: nginx
     ports:
       - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
   node:
     restart: always
     container_name: node
     build: .
-    ports:
-      - "5000:5000"
-    links:
-      - pyserver
-      - mongodb
 
   pyserver:
     container_name: pyserver
     build: ./server
     restart: always
-    ports:
-      - "3000:3000"
     env_file:
       - ./server/.env
 
   mongodb:
     container_name: mongodb
     image: mongo
-    ports:
-      - "27017:27017"
     volumes:
       - "./data:/data/db"
